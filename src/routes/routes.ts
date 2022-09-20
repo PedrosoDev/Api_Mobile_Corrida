@@ -1,6 +1,6 @@
 import express from 'express'
-import exampleRoutes from './example.routes'
+import userRoutes from './user.routes'
 
 export default express.Router()
-    .get('/', (req, res) => res.json('Hello World!'))
-    .use('/example', exampleRoutes)
+
+    .use('/users', userRoutes)
