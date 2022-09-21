@@ -1,13 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import Race from "./Race.model";
 
-/**
- * User
- * @typedef {object} User
- * @property {string} name.required
- * @property {string} email.required
- * @property {string} password.required
- */
 @Entity()
 export default class User {
   @PrimaryGeneratedColumn()
@@ -16,7 +9,7 @@ export default class User {
   @Column({ nullable: false })
   name!: string;
 
-  @Column({ nullable: false })
+  @Column({ nullable: false, unique: true })
   email!: string;
 
   @Column({ nullable: false })
@@ -24,5 +17,4 @@ export default class User {
 
   @OneToMany(() => Race, (race) => race.host)
   races!: Race[];
-
 }

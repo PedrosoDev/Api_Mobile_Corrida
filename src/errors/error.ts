@@ -5,6 +5,6 @@
  * @property {string} message.required
  */
 export default class Error {
-    statusCode!: number;
-    message!: string;
+  statusCode!: number;
+  message!: string;
 }
