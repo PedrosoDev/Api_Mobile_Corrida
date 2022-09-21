@@ -19,7 +19,6 @@ export default class User {
   @Column({ nullable: false })
   email!: string;
 
-  // TODO: Criptografar a senha do usuário.
   @Column({ nullable: false })
   password!: string;
 

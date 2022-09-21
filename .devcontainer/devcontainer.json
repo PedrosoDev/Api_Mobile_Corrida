@@ -20,7 +20,10 @@
   "workspaceFolder": "/workspace",
   "customizations": {
     "vscode": {
-      "extensions": ["esbenp.prettier-vscode"]
+      "extensions": [
+		"esbenp.prettier-vscode",
+		"cweijan.vscode-database-client2"
+	]
     }
   }
 

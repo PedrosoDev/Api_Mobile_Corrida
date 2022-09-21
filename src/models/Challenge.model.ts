@@ -3,7 +3,7 @@ import ChallengeType from "./ChallengeType.model";
 
 /**
  * Challenge
- * @typedef {object} challenge
+ * @typedef {object} Challenge
  * @property {string} question.required
  * @property {ChallengeType} challengeType.required
  */
