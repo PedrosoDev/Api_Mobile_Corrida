@@ -1,28 +1,33 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import Checkpoint from "./Checkpoint.model";
 import Runner from "./Runner.model";
 import User from "./User.model";
 
-/**
- * Race
- * @typedef {object} Race
- * @property {string} name.required
- * @property {string} code.required
- * @property {User} host.required
- */
 @Entity()
 export default class Race {
-    @PrimaryGeneratedColumn()
-    id!: number;
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-    @Column({ nullable: false })
-    name!: string;
+  @Column({ nullable: false })
+  name!: string;
 
-    @Column({ nullable: false })
-    code!: string;
+  @Column({ nullable: false, unique: true })
+  code!: string;
 
-    @ManyToOne(() => User, (user) => user.races, { nullable: false })
-    host!: User;
+  @ManyToOne(() => User, (user) => user.races, { nullable: false })
+  host!: User;
 
-    @OneToMany(() => Runner, (runner) => runner.race, { nullable: false })
-    runners!: Runner[];
+  @OneToMany(() => Runner, (runner) => runner.race, { nullable: false })
+  runners!: Runner[];
+
+  @OneToMany(() => Checkpoint, (checkpoint) => checkpoint.race, {
+    nullable: false,
+  })
+  checkpoints!: Checkpoint[];
 }

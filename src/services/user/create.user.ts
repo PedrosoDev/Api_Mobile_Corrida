@@ -2,13 +2,13 @@ import AppDataSource from "../../AppDataSource";
 import User from "../../models/User.model";
 import bcrypt from "bcrypt";
 
-const repository = AppDataSource.getRepository(User);
-
 interface Props {
   name: string;
   email: string;
   password: string;
 }
+
+const repository = AppDataSource.getRepository(User);
 
 export default async function (props: Props): Promise<User> {
   props.password = await bcrypt.hash(props.password, 10);

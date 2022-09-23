@@ -1,5 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import ChallengeType from "./ChallengeType.model"
+import ChallengeType from "./ChallengeType.model";
+import Race from "./Race.model";
 
 /**
  * Checkpoint
@@ -10,15 +11,18 @@ import ChallengeType from "./ChallengeType.model"
  */
 @Entity()
 export default class Checkpoint {
-    @PrimaryGeneratedColumn()
-    id!: number;
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-    @Column({ nullable: false })
-    name!: string;
+  @Column({ nullable: false })
+  name!: string;
 
-    @Column({ nullable: false })
-    code!: string;
+  @Column({ nullable: false, unique: true })
+  code!: string;
 
-    @ManyToOne(() => ChallengeType, { nullable: false })
-    challengeType!: ChallengeType;
+  @ManyToOne(() => ChallengeType, { nullable: false })
+  challengeType!: ChallengeType;
+
+  @ManyToOne(() => Race, { nullable: false })
+  race!: Race;
 }

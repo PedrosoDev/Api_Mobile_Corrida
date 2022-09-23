@@ -7,9 +7,9 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
  */
 @Entity()
 export default class ChallengeType {
-    @PrimaryGeneratedColumn()
-    id!: number;
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-    @Column({ nullable: false })
-    name!: string;
+  @Column({ nullable: false, unique: true })
+  name!: string;
 }

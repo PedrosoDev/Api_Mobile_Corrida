@@ -15,6 +15,7 @@ services:
       - 8080:3000
     environment:
       PORT: 3000
+      POSTGRES_HOST: database
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: app_db
