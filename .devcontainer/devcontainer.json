@@ -22,7 +22,8 @@
     "vscode": {
       "extensions": [
 		"esbenp.prettier-vscode",
-		"cweijan.vscode-database-client2"
+		"cweijan.vscode-database-client2",
+		"Gruntfuggly.todo-tree"
 	]
     }
   }

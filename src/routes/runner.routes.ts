@@ -15,15 +15,18 @@ export default express
   .Router()
 
   /**
-   * POST /runners/
+   * POST /runners/{RaceCode}/
    * @summary Create a runner to a race
    * @tags Runner
+   * @param {string} RaceCode.path.required
    * @param {object} request.body.required
    * @return {Runner} 201 - successs response
    * @example request - example
    * {
-   *  "name": "John Doe",
-   *  "race": 1
+   *  "name": "John Doe"
    * }
    */
-  .post("/", async (req, res) => await runnerController.createRunner(req, res));
+  .post(
+    "/:raceCode/",
+    async (req, res) => await runnerController.createRunner(req, res)
+  );

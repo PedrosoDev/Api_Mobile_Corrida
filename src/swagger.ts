@@ -23,7 +23,7 @@ const options: Options = {
       description: "Url para test",
     },
     {
-      url: "https://api-app-corrida.onrender.com",
+      url: "https://api-app-corrida.onrender.com/v1",
       description: "Url para produção",
     },
   ],

@@ -1,13 +1,37 @@
 import { Request, Response } from "express";
 import createRunner from "../services/runner/create.runner";
-import findByIdRace from "../services/race/findById.race";
+import raceFindByCode from "../services/race/findByCode.race";
+import findFromRace from "../services/runner/findFromRace.runner";
 import { instanceToPlain } from "class-transformer";
+import { jsonError } from "../utils/utils";
+import Runner from "../models/Runner.model";
 
 export default class RunnerController {
+  // TODO: Verificar se ja existe um corridor com o mesmo nome.
   public async createRunner(req: Request, res: Response): Promise<Response> {
-    const runner = await createRunner(req.body);
+    const raceCode = req.params.raceCode;
+    const race = await raceFindByCode(raceCode);
 
-    const json = instanceToPlain(runner);
+    if (!race) {
+      return jsonError(res, { statusCode: 404, message: "Race not found" });
+    }
+
+    const runnerName = req.body.name as string;
+
+    const existRunner = await findFromRace({ runnerName, race });
+
+    if (existRunner) {
+      return jsonError(res, {
+        statusCode: 400,
+        message: "There is already a runner with this name",
+      });
+    }
+
+    const runner: Runner = req.body;
+    runner.race = race;
+    const result = await createRunner(runner);
+
+    const json = instanceToPlain(result);
     return res.status(201).send(json);
   }
 }

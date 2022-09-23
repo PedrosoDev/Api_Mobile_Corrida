@@ -64,14 +64,24 @@ export default express
   )
 
   /**
-   * GET /races/{code}/
+   * GET /races/
    * @summary Get race from code
    * @tags Race
-   * @param {string} code.path - race's code
+   * @param {string} code.query.required
+   * @security BearerAuth
+   * @return {Race} 200 - success response
+   */
+  .get("/", async (req, res) => await raceController.getRaceFromCode(req, res))
+
+  /**
+   * GET /races/{id}/
+   * @summary Get race from id
+   * @tags Race
+   * @param {string} id.path - race's id
    * @return {Race} 200 - success response
    * @return {Error} 404 - bad response
    */
   .get(
-    "/:code/",
-    async (req, res) => await raceController.getRaceFromCode(req, res)
+    "/:id/",
+    async (req, res) => await raceController.getRaceFromId(req, res)
   );
