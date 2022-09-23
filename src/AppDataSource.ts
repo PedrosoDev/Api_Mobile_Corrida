@@ -15,6 +15,7 @@ export default new DataSource({
   password: POSTGRES_PASSWORD,
   database: POSTGRES_DATABASE,
   synchronize: true,
+  ssl: true,
   logging: false,
   entities: [`${__dirname}/models/**/*.model.ts`],
   subscribers: [],
