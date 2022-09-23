@@ -18,7 +18,7 @@ services:
       POSTGRES_HOST: database
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123
-      POSTGRES_DB: app_db
+      POSTGRES_DATABASE: app_db
     volumes:
       - .:/var/api
 

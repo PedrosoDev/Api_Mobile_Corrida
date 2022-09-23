@@ -13,7 +13,7 @@ const options: Options = {
     },
   },
   baseDir: __dirname,
-  filesPattern: "./**/*.ts",
+  filesPattern: ["./**/*.ts", "./**/*.js"],
   swaggerUIPath: "/api-docs",
   exposeSwaggerUI: true,
   exposeApiDocs: false,
@@ -21,6 +21,10 @@ const options: Options = {
     {
       url: "http://localhost:8080/v1",
       description: "Url para test",
+    },
+    {
+      url: "https://api-app-corrida.onrender.com",
+      description: "Url para produção",
     },
   ],
 };
