@@ -5,7 +5,7 @@ const repository = AppDataSource.getRepository(Race);
 
 export default async function (code: string): Promise<Race | null> {
   return await repository.findOne({
-    relations: { runners: true },
+    relations: { runners: true, host: true },
     where: {
       code,
     },

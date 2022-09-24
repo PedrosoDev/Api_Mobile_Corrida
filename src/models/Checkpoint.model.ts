@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import ChallengeType from "./ChallengeType.model";
+import { ChallengeType } from "../enums/ChallengeType.enum";
 import Race from "./Race.model";
 
 /**
@@ -20,7 +20,7 @@ export default class Checkpoint {
   @Column({ nullable: false, unique: true })
   code!: string;
 
-  @ManyToOne(() => ChallengeType, { nullable: false })
+  @Column({ type: "enum", enum: ChallengeType })
   challengeType!: ChallengeType;
 
   @ManyToOne(() => Race, { nullable: false })

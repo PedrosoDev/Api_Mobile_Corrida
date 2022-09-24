@@ -1,10 +1,7 @@
 import { Request, Response } from "express";
 import { instanceToPlain } from "class-transformer";
-import {
-  jsonError,
-  getUserFromToken,
-  generateRandomCode,
-} from "../utils/utils";
+import { getUserAuth, generateRandomCode } from "../utils/utils";
+import ResponseError from "../errors/error";
 import createRace from "../services/race/create.race";
 import findByCode from "../services/race/findByCode.race";
 import findAllFromUser from "../services/race/findAllFromUser.race";
@@ -13,11 +10,7 @@ import findById from "../services/race/findById.race";
 export default class RaceController {
   // TODO: Adicionar a forma de criação da corrida com os checkpoints
   public async createRace(req: Request, res: Response): Promise<Response> {
-    const user = await getUserFromToken(req);
-
-    if (!user) {
-      return jsonError(res, { statusCode: 404, message: "User not found" });
-    }
+    const user = await getUserAuth(req);
 
     req.body.host = user;
 
@@ -34,11 +27,7 @@ export default class RaceController {
   }
 
   public async getAllRaces(req: Request, res: Response): Promise<Response> {
-    const user = await getUserFromToken(req);
-
-    if (!user) {
-      return jsonError(res, { statusCode: 404, message: "User not found" });
-    }
+    const user = await getUserAuth(req);
 
     const json = instanceToPlain(await findAllFromUser(user));
     return res.status(200).send(json);
@@ -50,7 +39,7 @@ export default class RaceController {
     const race = await findByCode(raceCode as string);
 
     if (!race) {
-      return jsonError(res, { statusCode: 404, message: "Race not found" });
+      throw new ResponseError(404, "Race not found");
     }
 
     const json = instanceToPlain(race);
@@ -61,16 +50,13 @@ export default class RaceController {
     const raceId = req.params.id;
 
     if (Number.isNaN(raceId)) {
-      return jsonError(res, {
-        statusCode: 400,
-        message: "The id parameter must be a number",
-      });
+      throw new ResponseError(400, "The id parameter must be a number");
     }
 
     const race = await findById(Number.parseInt(raceId));
 
     if (!race) {
-      return jsonError(res, { statusCode: 404, message: "Race not found" });
+      throw new ResponseError(404, "Race not found");
     }
 
     const json = instanceToPlain(race);

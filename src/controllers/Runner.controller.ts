@@ -3,8 +3,8 @@ import createRunner from "../services/runner/create.runner";
 import raceFindByCode from "../services/race/findByCode.race";
 import findFromRace from "../services/runner/findFromRace.runner";
 import { instanceToPlain } from "class-transformer";
-import { jsonError } from "../utils/utils";
 import Runner from "../models/Runner.model";
+import ResponseError from "../errors/error";
 
 export default class RunnerController {
   // TODO: Verificar se ja existe um corridor com o mesmo nome.
@@ -13,7 +13,7 @@ export default class RunnerController {
     const race = await raceFindByCode(raceCode);
 
     if (!race) {
-      return jsonError(res, { statusCode: 404, message: "Race not found" });
+      throw new ResponseError(404, "Race not found");
     }
 
     const runnerName = req.body.name as string;
@@ -21,10 +21,7 @@ export default class RunnerController {
     const existRunner = await findFromRace({ runnerName, race });
 
     if (existRunner) {
-      return jsonError(res, {
-        statusCode: 400,
-        message: "There is already a runner with this name",
-      });
+      throw new ResponseError(400, "There is already a runner with this name");
     }
 
     const runner: Runner = req.body;

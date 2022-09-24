@@ -1,20 +1,28 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import ChallengeType from "./ChallengeType.model";
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import Answer from "./Answers.model";
+import { ChallengeType } from "../enums/ChallengeType.enum";
+import Race from "./Race.model";
 
-/**
- * Challenge
- * @typedef {object} Challenge
- * @property {string} question.required
- * @property {ChallengeType} challengeType.required
- */
 @Entity()
 export default class Challenge {
-    @PrimaryGeneratedColumn()
-    id!: number;
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-    @Column({ nullable: false })
-    question!: string;
+  @Column({ nullable: false })
+  question!: string;
 
-    @ManyToOne(() => ChallengeType, { nullable: false })
-    challengeType!: ChallengeType;
+  @OneToMany(() => Answer, (answer) => answer.challenge)
+  answers!: Answer[];
+
+  @Column({ type: "enum", enum: ChallengeType })
+  challengeType!: ChallengeType;
+
+  @ManyToOne(() => Race, { nullable: false })
+  race!: Race;
 }

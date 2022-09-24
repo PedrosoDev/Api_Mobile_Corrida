@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
 import findByEmail from "../services/user/findByEmail.user";
-import { getUserFromToken, jsonError } from "../utils/utils";
+import { getUserAuth } from "../utils/utils";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/User.model";
 import { instanceToPlain } from "class-transformer";
+import ResponseError from "../errors/error";
 
 const SECRET_KEY_TOKEN = "329cf7e1-20b2-4e13-8e03-79c06fe1f10c";
 const SECRET_KEY_REFRESHTOKEN = "449d231c-2746-44fb-9ac7-4cd83cfbc057";
@@ -19,19 +20,13 @@ export default class TokenController {
     const user = await findByEmail(email);
 
     if (!user) {
-      return jsonError(res, {
-        statusCode: 401,
-        message: "Authentication failed",
-      });
+      throw new ResponseError(401, "Authentication failed");
     }
 
     const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (!passwordMatch) {
-      return jsonError(res, {
-        statusCode: 401,
-        message: "Authentication failed",
-      });
+      throw new ResponseError(401, "Authentication failed");
     }
 
     const json = instanceToPlain(this.generateTokens(user));
@@ -43,10 +38,10 @@ export default class TokenController {
     res: Response
   ): Promise<Response> {
     const { refreshToken } = req.body;
-    const user = await getUserFromToken(req);
+    const user = await getUserAuth(req);
 
     if (!user) {
-      return jsonError(res, { statusCode: 404, message: "User not found" });
+      throw new ResponseError(404, "User not found");
     }
 
     try {
@@ -54,10 +49,7 @@ export default class TokenController {
       const json = instanceToPlain(this.generateTokens(user));
       return res.status(200).send(json);
     } catch (error) {
-      return jsonError(res, {
-        statusCode: 401,
-        message: "Invalid resfresh token",
-      });
+      throw new ResponseError(401, "Invalid resfresh token");
     }
   }
 
