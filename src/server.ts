@@ -1,11 +1,10 @@
 import "reflect-metadata";
 import "express-async-errors";
 import AppDataSouce from "./AppDataSource";
-import swaggerSpecs from "./swagger";
+import swagger from "./swagger";
 import express, { ErrorRequestHandler } from "express";
 import cors from "cors";
 import routes from "./routes/routes";
-import expressJSDocSwagger from "express-jsdoc-swagger";
 import ResponseError from "./errors/error";
 
 const { PORT = 3000 } = process.env;
@@ -18,9 +17,9 @@ void (async function () {
 
   app.use(express.json());
 
-  expressJSDocSwagger(app)(swaggerSpecs);
-
   app.use("/v1", routes);
+
+  swagger(app);
 
   app.use(((err, _req, res, next) => {
     if (err instanceof ResponseError) {
@@ -28,7 +27,7 @@ void (async function () {
         .status(err.statusCode)
         .json({ statusCode: err.statusCode, message: err.message });
     } else if (err) {
-      res.status(500).json({ message: "Internal Server Error" });
+      res.status(500).json({ message: "An unexpected error has occurred" });
     }
 
     next(err);

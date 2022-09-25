@@ -57,21 +57,17 @@ export default express
    * @security BearerAuth
    * @return {array<Race>} 200 - success response
    */
-  .get(
-    "/",
-    ensureAuthenticated,
-    async (req, res) => await raceController.getAllRaces(req, res)
-  )
+  .get("/", ensureAuthenticated, raceController.getAllRaces)
 
   /**
-   * GET /races/
+   * GET /races/{RaceCode}/
    * @summary Get race from code
    * @tags Race
    * @param {string} code.query.required
    * @security BearerAuth
    * @return {Race} 200 - success response
    */
-  .get("/", async (req, res) => await raceController.getRaceFromCode(req, res))
+  .get("/:raceCode/", raceController.getRaceFromCode)
 
   /**
    * GET /races/{id}/
@@ -81,7 +77,4 @@ export default express
    * @return {Race} 200 - success response
    * @return {Error} 404 - bad response
    */
-  .get(
-    "/:id/",
-    async (req, res) => await raceController.getRaceFromId(req, res)
-  );
+  .get("/:id/", raceController.getRaceFromId);

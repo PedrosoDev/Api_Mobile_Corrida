@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import findByEmail from "../services/user/findByEmail.user";
+import findUserByEmail from "../services/user/findByEmail.user";
 import { getUserAuth } from "../utils/utils";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -7,6 +7,7 @@ import User from "../models/User.model";
 import { instanceToPlain } from "class-transformer";
 import ResponseError from "../errors/error";
 
+// TODO: Arranjar um jeito melhor de guardar essas chaves
 const SECRET_KEY_TOKEN = "329cf7e1-20b2-4e13-8e03-79c06fe1f10c";
 const SECRET_KEY_REFRESHTOKEN = "449d231c-2746-44fb-9ac7-4cd83cfbc057";
 
@@ -17,7 +18,7 @@ export default class TokenController {
   ): Promise<Response> {
     const { email, password } = req.body;
 
-    const user = await findByEmail(email);
+    const user = await findUserByEmail(email);
 
     if (!user) {
       throw new ResponseError(401, "Authentication failed");

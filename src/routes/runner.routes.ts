@@ -26,7 +26,4 @@ export default express
    *  "name": "John Doe"
    * }
    */
-  .post(
-    "/:raceCode/",
-    async (req, res) => await runnerController.createRunner(req, res)
-  );
+  .post("/:raceCode/", runnerController.createRunner);

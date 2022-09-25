@@ -26,4 +26,4 @@ export default express
    *  "password": "test1234"
    * }
    */
-  .post("/", async (req, res) => await userController.createUser(req, res));
+  .post("/", userController.createUser);

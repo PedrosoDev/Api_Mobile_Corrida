@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
-import findByCodeRace from "../services/race/findByCode.race";
-import createChallenge from "../services/challenge/create.challenge";
-import findByIdChallenge from "../services/challenge/findById.challenge";
-import createAnswer from "../services/answer/create.answer";
 import { getUserAuth } from "../utils/utils";
-import ResponseError from "../errors/error";
 import { instanceToPlain } from "class-transformer";
+import ResponseError from "../errors/error";
 import Answer from "../models/Answers.model";
+import createChallenge from "../services/challenge/create.challenge";
+import createAnswer from "../services/answer/create.answer";
+import findByCodeRace from "../services/race/findByCode.race";
+import findByIdChallenge from "../services/challenge/findById.challenge";
+import Challenge from "../models/Challenge.model";
 
 export default class ChallengeController {
   public async createChallenge(req: Request, res: Response): Promise<Response> {
@@ -24,11 +25,12 @@ export default class ChallengeController {
       );
     }
 
-    req.body.race = race.id;
-    req.body.code;
-    const challenge = await createChallenge(req.body);
+    const { answers, ...challengeData } = req.body;
 
-    const answers: Answer[] = req.body.answers;
+    challengeData.race = race.id;
+
+    const challenge = await createChallenge(challengeData);
+
     for (let answer of answers) {
       answer.challenge = challenge;
       await createAnswer(answer);

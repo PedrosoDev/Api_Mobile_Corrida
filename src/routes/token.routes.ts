@@ -37,7 +37,7 @@ export default express
    *    "password": "test1234"
    * }
    */
-  .post("/", async (req, res) => tokenController.getTokenWithLogin(req, res))
+  .post("/", tokenController.getTokenWithLogin)
 
   /**
    * POST /token/refresh/
@@ -52,6 +52,4 @@ export default express
    *    "refresh": "",
    * }
    */
-  .post("/refresh/", ensureAuthenticated, async (req, res) =>
-    tokenController.getTokenWithLogin(req, res)
-  );
+  .post("/refresh/", ensureAuthenticated, tokenController.getTokenWithLogin);

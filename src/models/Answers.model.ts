@@ -1,5 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import Challenge from "./Challenge.model";
+import {} from "class-validator";
 
 /**
  * Answer
@@ -10,15 +11,15 @@ import Challenge from "./Challenge.model";
  */
 @Entity()
 export default class Answer {
-    @PrimaryGeneratedColumn()
-    id!: number;
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-    @Column({ nullable: false })
-    name!: string;
+  @Column({ nullable: false })
+  name!: string;
 
-    @Column({ nullable: false })
-    isCorrect!: boolean;
+  @Column({ nullable: false })
+  isCorrect!: boolean;
 
-    @ManyToOne(() => Challenge, { nullable: false })
-    challenge!: Challenge;
+  @ManyToOne(() => Challenge, { nullable: false })
+  challenge!: Challenge;
 }
