@@ -2,23 +2,17 @@ import ChallengeController from "../controllers/Challenge.controller";
 import express from "express";
 import Answer from "../models/Answers.model";
 import ensureAuthenticated from "../middleware/ensureAuthenticated";
+import validateBody from "../middleware/validateBody";
+import ChallengeDto from "../dto/challenge.dto";
 
 const challengeController = new ChallengeController();
 
-/**
- * Challenge
- * @typedef {object} Challenge
- * @property {string} quetion.required
- * @property {string} challeneType.required - enum:Question
- * @property {array<Answer>} answers.required
- * @property {Race} race.required
- */
 export default express
   .Router()
 
   /**
    * POST /challenges/{RaceCode}/
-   * @summary Create a challene to a race
+   * @summary Create a challenge to a race
    * @tags Challenge
    * @security BearerAuth
    * @param {string} RaceCode.path.required
@@ -27,6 +21,7 @@ export default express
    * @example request - example
    * {
    *  "question": "Texto da pergunta",
+   *  "imageName": "Image test"
    *  "challengeType": "Question",
    *  "answers": [
    *    {
@@ -50,6 +45,6 @@ export default express
    */
   .post(
     "/:raceCode/",
-    ensureAuthenticated,
+    [validateBody(ChallengeDto), ensureAuthenticated],
     challengeController.createChallenge
   );

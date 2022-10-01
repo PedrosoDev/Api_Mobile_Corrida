@@ -1,6 +1,7 @@
 import Race from "../../models/Race.model";
 import AppDateSource from "../../AppDataSource";
 import Runner from "../../models/Runner.model";
+import RunnerDto from "../../dto/runner.dto";
 
 interface Props {
   name: string;

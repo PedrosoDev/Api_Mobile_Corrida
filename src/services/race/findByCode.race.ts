@@ -1,4 +1,5 @@
 import AppDataSource from "../../AppDataSource";
+import RaceDto from "../../dto/race.dto";
 import Race from "../../models/Race.model";
 
 const repository = AppDataSource.getRepository(Race);

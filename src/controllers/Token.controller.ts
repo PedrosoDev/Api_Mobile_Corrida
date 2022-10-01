@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import findUserByEmail from "../services/user/findByEmail.user";
-import { getUserAuth } from "../utils/utils";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/User.model";
@@ -11,6 +10,7 @@ import ResponseError from "../errors/error";
 const SECRET_KEY_TOKEN = "329cf7e1-20b2-4e13-8e03-79c06fe1f10c";
 const SECRET_KEY_REFRESHTOKEN = "449d231c-2746-44fb-9ac7-4cd83cfbc057";
 
+// TODO: Melhorar na questão do token de atualização, colocar ele infinito e guardar na base de dados
 export default class TokenController {
   public async getTokenWithLogin(
     req: Request,
@@ -39,7 +39,7 @@ export default class TokenController {
     res: Response
   ): Promise<Response> {
     const { refreshToken } = req.body;
-    const user = await getUserAuth(req);
+    const user = req.currentUser!;
 
     if (!user) {
       throw new ResponseError(404, "User not found");

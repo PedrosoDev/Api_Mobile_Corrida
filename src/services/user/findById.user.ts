@@ -4,6 +4,6 @@ import User from "../../models/User.model";
 
 const repository = AppDataSource.getRepository(User);
 
-export default async function (email: string): Promise<User | null> {
-  return await repository.findOneBy({ email });
+export default async function (id: number): Promise<User | null> {
+  return await repository.findOneBy({ id });
 }

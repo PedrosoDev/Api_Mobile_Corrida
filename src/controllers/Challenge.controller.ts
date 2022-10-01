@@ -1,17 +1,15 @@
 import { Request, Response } from "express";
-import { getUserAuth } from "../utils/utils";
 import { instanceToPlain } from "class-transformer";
 import ResponseError from "../errors/error";
-import Answer from "../models/Answers.model";
 import createChallenge from "../services/challenge/create.challenge";
 import createAnswer from "../services/answer/create.answer";
 import findByCodeRace from "../services/race/findByCode.race";
 import findByIdChallenge from "../services/challenge/findById.challenge";
-import Challenge from "../models/Challenge.model";
+import ChallengeDto from "../dto/challenge.dto";
 
 export default class ChallengeController {
   public async createChallenge(req: Request, res: Response): Promise<Response> {
-    const user = await getUserAuth(req);
+    const user = req.currentUser!;
     const race = await findByCodeRace(req.params.raceCode);
 
     if (!race) {
@@ -25,7 +23,7 @@ export default class ChallengeController {
       );
     }
 
-    const { answers, ...challengeData } = req.body;
+    const { answers, ...challengeData }: ChallengeDto = req.body;
 
     challengeData.race = race.id;
 

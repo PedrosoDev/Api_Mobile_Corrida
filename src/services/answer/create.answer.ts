@@ -1,6 +1,7 @@
 import Answer from "../../models/Answers.model";
 import AppDataSource from "../../AppDataSource";
 import Challenge from "../../models/Challenge.model";
+import AnswerDto from "../../dto/answer.dto";
 
 interface Props {
   name: string;

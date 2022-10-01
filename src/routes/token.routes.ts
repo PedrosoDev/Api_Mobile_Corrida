@@ -1,14 +1,10 @@
 import express from "express";
 import TokenController from "../controllers/Token.controller";
 import ensureAuthenticated from "../middleware/ensureAuthenticated";
-const tokenController = new TokenController();
+import validateBody from "../middleware/validateBody";
+import LoginDto from "../dto/login.dto";
 
-/**
- * Login
- * @typedef {object} Login
- * @property {string} email.required
- * @property {string} password.required
- */
+const tokenController = new TokenController();
 
 /**
  * RefreshToken
@@ -37,7 +33,7 @@ export default express
    *    "password": "test1234"
    * }
    */
-  .post("/", tokenController.getTokenWithLogin)
+  .post("/", validateBody(LoginDto), tokenController.getTokenWithLogin)
 
   /**
    * POST /token/refresh/
@@ -53,3 +49,5 @@ export default express
    * }
    */
   .post("/refresh/", ensureAuthenticated, tokenController.getTokenWithLogin);
+
+//TODO: Crair uma rota onde o usuário pode se deslogar, assim removendo da base de dados o token infinito

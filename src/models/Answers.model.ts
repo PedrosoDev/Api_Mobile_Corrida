@@ -1,6 +1,5 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import Challenge from "./Challenge.model";
-import {} from "class-validator";
 
 /**
  * Answer

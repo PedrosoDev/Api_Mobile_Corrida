@@ -17,6 +17,9 @@ export default class Challenge {
   @Column({ nullable: false })
   question!: string;
 
+  @Column()
+  imageName!: string;
+
   @OneToMany(() => Answer, (answer) => answer.challenge)
   answers!: Answer[];
 

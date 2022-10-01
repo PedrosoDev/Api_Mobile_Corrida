@@ -1,5 +1,7 @@
 import { FindManyOptions, FindOptionsWhere } from "typeorm";
 import AppDataSource from "../../AppDataSource";
+import RaceDto from "../../dto/race.dto";
+import UserDto from "../../dto/user.dto";
 import Race from "../../models/Race.model";
 import User from "../../models/User.model";
 

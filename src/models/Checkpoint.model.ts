@@ -2,13 +2,6 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { ChallengeType } from "../enums/ChallengeType.enum";
 import Race from "./Race.model";
 
-/**
- * Checkpoint
- * @typedef {object} Checkpoint
- * @property {string} name.required
- * @property {string} code.required
- * @property {ChallengeType} challengeType.required
- */
 @Entity()
 export default class Checkpoint {
   @PrimaryGeneratedColumn()

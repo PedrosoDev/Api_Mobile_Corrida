@@ -4,13 +4,6 @@ import RaceController from "../controllers/Race.controller";
 
 const raceController = new RaceController();
 
-/**
- * Race
- * @typedef {object} Race
- * @property {string} name.required
- * @property {string} code
- * @property {User} host
- */
 export default express
   .Router()
 
@@ -44,11 +37,7 @@ export default express
    *  ]
    * }
    */
-  .post(
-    "/",
-    ensureAuthenticated,
-    async (req, res) => await raceController.createRace(req, res)
-  )
+  .post("/", ensureAuthenticated, raceController.createRace)
 
   /**
    * GET /races/

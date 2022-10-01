@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { instanceToPlain } from "class-transformer";
-import { getUserAuth, generateRandomCode } from "../utils/utils";
+import { generateRandomCode } from "../utils/utils";
 import ResponseError from "../errors/error";
 import createRace from "../services/race/create.race";
 import findByCodeRace from "../services/race/findByCode.race";
@@ -10,7 +10,7 @@ import findByIdRace from "../services/race/findById.race";
 export default class RaceController {
   // TODO: Adicionar a forma de criação da corrida com os checkpoints
   public async createRace(req: Request, res: Response): Promise<Response> {
-    const user = await getUserAuth(req);
+    const user = req.currentUser!;
     const data = req.body;
 
     data.host = user;
@@ -28,7 +28,7 @@ export default class RaceController {
   }
 
   public async getAllRaces(req: Request, res: Response): Promise<Response> {
-    const user = await getUserAuth(req);
+    const user = req.currentUser!;
 
     const json = instanceToPlain(await findAllFromUser(user));
     return res.status(200).send(json);

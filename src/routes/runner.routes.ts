@@ -3,14 +3,6 @@ import express from "express";
 
 const runnerController = new RunnerController();
 
-/**
- * Runner
- * @typedef {object} Runner
- * @property {string} name.required
- * @property {Date} raceTimeStarted
- * @property {Date} raceTimeFinished
- * @property {Race} race.required
- */
 export default express
   .Router()
 

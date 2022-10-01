@@ -1,6 +1,7 @@
 import AppDataSource from "../../AppDataSource";
 import User from "../../models/User.model";
 import bcrypt from "bcrypt";
+import UserDto from "../../dto/user.dto";
 
 interface Props {
   name: string;
